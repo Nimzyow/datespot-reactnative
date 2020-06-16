@@ -1,15 +1,16 @@
-import * as Types from "./types";
-import axios from "axios";
+import * as Types from './types';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
-export const registerUser = (formData) => async (dispatch) => {
+export const registerUser = formData => async dispatch => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
   try {
     const res = await axios.post(
-      "http://localhost:4000/api/users",
+      'http://localhost:4000/api/users',
       formData,
       config,
     );
@@ -25,15 +26,15 @@ export const registerUser = (formData) => async (dispatch) => {
   }
 };
 
-export const loginUser = (formData) => async (dispatch) => {
+export const loginUser = formData => async dispatch => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
   try {
     const res = await axios.post(
-      "http://localhost:4000/api/auth",
+      'http://localhost:4000/api/auth',
       formData,
       config,
     );
@@ -46,5 +47,19 @@ export const loginUser = (formData) => async (dispatch) => {
       type: Types.LOGIN_FAIL,
       payload: err.response.data.msg,
     });
+  }
+};
+
+export const loadUser = () => async dispatch => {
+  try {
+    const token = await AsyncStorage.getItem('datespot-token');
+    const config = {headers: {'x-auth-token': token}};
+    const res = await axios.get('http://localhost:4000/auth', config);
+    dispatch({
+      type: Types.USER_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.error(err);
   }
 };

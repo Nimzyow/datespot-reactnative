@@ -1,25 +1,28 @@
-import { registerUser, loginUser } from "./auth";
-import mockAxios from "axios";
-import * as Types from "./types";
-jest.mock("axios");
+import {registerUser, loginUser, loadUser} from './auth';
+import mockAxios from 'axios';
+import * as Types from './types';
+//import mockAsyncStorage from '@react-native-community/async-storage';
+//import mockAsyncStorage from '@react-native-community/async-storage/jest/async-storage-mock';
+//jest.mock('@react-native-community/async-storage', () => mockAsyncStorage);
+jest.mock('axios');
 
-const handleError = (err) => {
-  console.log("err, ", err);
+const handleError = err => {
+  console.log('err, ', err);
   expect(true).toBe(false);
 };
 
-describe("authActions", () => {
+describe('authActions', () => {
   let dispatch = jest.fn();
   let user;
   beforeEach(() => {
     jest.clearAllMocks();
-    user = { username: "testy", email: "test@test.com", password: "123456" };
+    user = {username: 'testy', email: 'test@test.com', password: '123456'};
   });
-  it("REGISTER_SUCCESS is called on succesfull registeration of user", async () => {
+  it('REGISTER_SUCCESS is called on succesfull registeration of user', async () => {
     mockAxios.post.mockImplementationOnce(
       async () =>
         await Promise.resolve({
-          data: { token: "greatestTokenInTheUniverse" },
+          data: {token: 'greatestTokenInTheUniverse'},
         }),
     );
     try {
@@ -29,24 +32,23 @@ describe("authActions", () => {
 
       expect(mockAxios.post).toHaveBeenCalledTimes(1);
       expect(mockAxios.post).toHaveBeenCalledWith(
-        "http://localhost:4000/api/users",
+        'http://localhost:4000/api/users',
         user,
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {'Content-Type': 'application/json'},
         },
       );
       expect(dispatch).toHaveBeenCalledWith({
         type: Types.REGISTER_SUCCESS,
-        payload: { token: "greatestTokenInTheUniverse" },
+        payload: {token: 'greatestTokenInTheUniverse'},
       });
     } catch (err) {
       handleError(err);
     }
   });
-  it("REGISTER_FAIL is called when email already exists in database", async () => {
+  it('REGISTER_FAIL is called when email already exists in database', async () => {
     mockAxios.post.mockImplementationOnce(
-      async () =>
-        await Promise.reject({ response: { data: { msg: "some error" } } }),
+      async () => await Promise.reject({response: {data: {msg: 'some error'}}}),
     );
     try {
       const response = await registerUser(user);
@@ -54,18 +56,18 @@ describe("authActions", () => {
 
       expect(dispatch).toHaveBeenCalledWith({
         type: Types.REGISTER_FAIL,
-        payload: "some error",
+        payload: 'some error',
       });
     } catch (err) {
       handleError(err);
     }
   });
-  it("LOGIN_SUCCESS is called on succesfull login of user", async () => {
+  it('LOGIN_SUCCESS is called on succesfull login of user', async () => {
     delete user.username;
     mockAxios.post.mockImplementationOnce(
       async () =>
         await Promise.resolve({
-          data: { token: "greatestTokenInTheUniverse" },
+          data: {token: 'greatestTokenInTheUniverse'},
         }),
     );
     try {
@@ -75,18 +77,52 @@ describe("authActions", () => {
 
       expect(mockAxios.post).toHaveBeenCalledTimes(1);
       expect(mockAxios.post).toHaveBeenCalledWith(
-        "http://localhost:4000/api/auth",
+        'http://localhost:4000/api/auth',
         user,
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {'Content-Type': 'application/json'},
         },
       );
       expect(dispatch).toHaveBeenCalledWith({
         type: Types.LOGIN_SUCCESS,
-        payload: { token: "greatestTokenInTheUniverse" },
+        payload: {token: 'greatestTokenInTheUniverse'},
       });
     } catch (err) {
       handleError(err);
     }
+  });
+  it('USER_LOADED is called when token is succesfully read.', async () => {
+    const user = {
+      _id: 'testId',
+    };
+
+    const defaultToken = 'defaultToken';
+
+    mockAsyncStorage.setItem('datespot-token', defaultToken);
+
+    mockAxios.get.mockImplementationOnce(
+      async () => await Promise.resolve({data: user}),
+    );
+
+    try {
+      const response = await loadUser();
+
+      await response(dispatch);
+
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+      expect(mockAxios.get).toHaveBeenCalledWith('http://localhost:4000/auth', {
+        headers: {'x-auth-token': defaultToken},
+      });
+      expect(dispatch).toHaveBeenCalledWith({
+        type: Types.USER_LOADED,
+        payload: user,
+      });
+    } catch (err) {
+      handleError(err);
+    }
+    //we need to get token - mock asyncstorage
+    //put that in the headers - mock axios
+    //make request
+    //call dispatch
   });
 });
