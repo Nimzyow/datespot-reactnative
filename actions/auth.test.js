@@ -2,9 +2,6 @@ import {registerUser, loginUser, loadUser} from './auth';
 import mockAxios from 'axios';
 import * as Types from './types';
 import AsyncStorage from '@react-native-community/async-storage';
-//import mockAsyncStorage from '@react-native-community/async-storage';
-//import mockAsyncStorage from '@react-native-community/async-storage/jest/async-storage-mock';
-//jest.mock('@react-native-community/async-storage', () => mockAsyncStorage);
 jest.mock('axios');
 
 const handleError = err => {
@@ -121,9 +118,5 @@ describe('authActions', () => {
     } catch (err) {
       handleError(err);
     }
-    //we need to get token - mock asyncstorage
-    //put that in the headers - mock axios
-    //make request
-    //call dispatch
   });
 });
