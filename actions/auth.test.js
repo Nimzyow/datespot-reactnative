@@ -1,6 +1,7 @@
 import {registerUser, loginUser, loadUser} from './auth';
 import mockAxios from 'axios';
 import * as Types from './types';
+import AsyncStorage from '@react-native-community/async-storage';
 //import mockAsyncStorage from '@react-native-community/async-storage';
 //import mockAsyncStorage from '@react-native-community/async-storage/jest/async-storage-mock';
 //jest.mock('@react-native-community/async-storage', () => mockAsyncStorage);
@@ -98,7 +99,7 @@ describe('authActions', () => {
 
     const defaultToken = 'defaultToken';
 
-    mockAsyncStorage.setItem('datespot-token', defaultToken);
+    AsyncStorage.setItem('datespot-token', defaultToken);
 
     mockAxios.get.mockImplementationOnce(
       async () => await Promise.resolve({data: user}),
