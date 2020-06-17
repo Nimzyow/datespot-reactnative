@@ -108,9 +108,12 @@ describe('authActions', () => {
       await response(dispatch);
 
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
-      expect(mockAxios.get).toHaveBeenCalledWith('http://localhost:4000/auth', {
-        headers: {'x-auth-token': defaultToken},
-      });
+      expect(mockAxios.get).toHaveBeenCalledWith(
+        'http://localhost:4000/api/auth',
+        {
+          headers: {'x-auth-token': defaultToken},
+        },
+      );
       expect(dispatch).toHaveBeenCalledWith({
         type: Types.USER_LOADED,
         payload: user,
@@ -134,9 +137,12 @@ describe('authActions', () => {
       await response(dispatch);
 
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
-      expect(mockAxios.get).toHaveBeenCalledWith('http://localhost:4000/auth', {
-        headers: {'x-auth-token': bogusToken},
-      });
+      expect(mockAxios.get).toHaveBeenCalledWith(
+        'http://localhost:4000/api/auth',
+        {
+          headers: {'x-auth-token': bogusToken},
+        },
+      );
       expect(dispatch).toHaveBeenCalledWith({
         type: Types.AUTH_ERROR,
         payload: {err: 'your token is bogus'},

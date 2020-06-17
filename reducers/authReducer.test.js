@@ -49,9 +49,10 @@ describe('authReducer', () => {
 
     const action = {
       type: types.LOGIN_SUCCESS,
-      payload: expectedState.token,
+      payload: {token: expectedState.token},
     };
     expect(authReducer(undefined, action)).toEqual(expectedState);
+    expect(AsyncStorage.setItem).toBeCalledWith('datespot-token', 'token');
   });
   it('calls USER_LOADED action ', () => {
     initialState.token = 'greatestTokenEver';
@@ -67,7 +68,7 @@ describe('authReducer', () => {
     expect(authReducer(initialState, action)).toEqual(expectedState);
   });
   it('calls AUTH_ERROR action', () => {
-    AsyncStorage.setItem('datespot-token', 'greatToken');
+    AsyncStorage.setItem('datespot-token', 'bogusToken');
     initialState.token = 'bogusToken';
     initialState.user = {_id: 'userId'};
 
