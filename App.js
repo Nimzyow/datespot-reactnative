@@ -34,7 +34,7 @@ const App = () => {
           <Stack.Screen
             name="spots"
             component={Spots}
-            options={{title: 'DateSpot'}}
+            options={{title: 'DateSpot', headerLeft: null}}
           />
         </Stack.Navigator>
       </NavigationContainer>
