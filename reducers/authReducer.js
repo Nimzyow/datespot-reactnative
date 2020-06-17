@@ -1,8 +1,9 @@
-import * as types from "../actions/types";
+import * as types from '../actions/types';
 
 const initialState = {
   token: null,
   isAuthenticated: false,
+  user: null,
   error: null,
 };
 
@@ -28,6 +29,14 @@ export default (state = initialState, action) => {
         token: action.payload,
         isAuthenticated: true,
         error: null,
+      };
+    case types.AUTH_ERROR:
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        user: null,
+        error: action.payload,
       };
     default:
       return state;
