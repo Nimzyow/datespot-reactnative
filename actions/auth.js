@@ -54,8 +54,7 @@ export const loginUser = formData => async dispatch => {
 export const loadUser = () => async dispatch => {
   try {
     const storageResponse = await AsyncStorage.getItem('datespot-token');
-
-    const token = JSON.parse(storageResponse).token;
+    const token = storageResponse;
 
     const config = {headers: {'x-auth-token': token}};
     const res = await axios.get('http://localhost:4000/api/auth', config);

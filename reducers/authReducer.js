@@ -25,10 +25,10 @@ export default (state = initialState, action) => {
         error: action.payload,
       };
     case types.LOGIN_SUCCESS:
-      AsyncStorage.setItem('datespot-token', JSON.stringify(action.payload));
+      AsyncStorage.setItem('datespot-token', action.payload.token);
       return {
         ...state,
-        token: JSON.stringify(action.payload),
+        token: action.payload.token,
         isAuthenticated: true,
         error: null,
       };

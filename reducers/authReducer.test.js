@@ -49,7 +49,7 @@ describe('authReducer', () => {
 
     const action = {
       type: types.LOGIN_SUCCESS,
-      payload: expectedState.token,
+      payload: {token: expectedState.token},
     };
     expect(authReducer(undefined, action)).toEqual(expectedState);
     expect(AsyncStorage.setItem).toBeCalledWith('datespot-token', 'token');
