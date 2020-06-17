@@ -60,6 +60,9 @@ export const loadUser = () => async dispatch => {
       payload: res.data,
     });
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: Types.AUTH_ERROR,
+      payload: err,
+    });
   }
 };

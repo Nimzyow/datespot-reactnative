@@ -119,4 +119,30 @@ describe('authActions', () => {
       handleError(err);
     }
   });
+  it('AUTH_ERROR is called when token is not successfully read.', async () => {
+    const bogusToken = 'thisTokenIsBogus';
+
+    AsyncStorage.setItem('datespot-token', bogusToken);
+
+    mockAxios.get.mockImplementationOnce(
+      async () => await Promise.reject({err: 'your token is bogus'}),
+    );
+
+    try {
+      const response = await loadUser();
+
+      await response(dispatch);
+
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+      expect(mockAxios.get).toHaveBeenCalledWith('http://localhost:4000/auth', {
+        headers: {'x-auth-token': bogusToken},
+      });
+      expect(dispatch).toHaveBeenCalledWith({
+        type: Types.AUTH_ERROR,
+        payload: {err: 'your token is bogus'},
+      });
+    } catch (err) {
+      handleError(err);
+    }
+  });
 });
