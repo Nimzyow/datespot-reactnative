@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import * as types from '../actions/types';
 
 const initialState = {
@@ -31,12 +32,19 @@ export default (state = initialState, action) => {
         error: null,
       };
     case types.AUTH_ERROR:
+      AsyncStorage.removeItem('datespot-token');
       return {
         ...state,
         token: null,
         isAuthenticated: false,
         user: null,
         error: action.payload,
+      };
+    case types.USER_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload,
       };
     default:
       return state;

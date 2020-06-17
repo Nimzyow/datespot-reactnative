@@ -1,4 +1,5 @@
 import authReducer from './authReducer';
+import AsyncStorage from '@react-native-community/async-storage';
 import * as types from '../actions/types';
 describe('authReducer', () => {
   let initialState;
@@ -10,7 +11,7 @@ describe('authReducer', () => {
       user: null,
       error: null,
     };
-    expectedState = initialState;
+    expectedState = {...initialState};
   });
   it('returns state on unrelated action', () => {
     const nonsenseState = {something: 'something'};
@@ -52,7 +53,21 @@ describe('authReducer', () => {
     };
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
+  it('calls USER_LOADED action ', () => {
+    initialState.token = 'greatestTokenEver';
+    expectedState.token = initialState.token;
+    expectedState.isAuthenticated = true;
+    expectedState.user = {_id: 'userId'};
+
+    const action = {
+      type: types.USER_LOADED,
+      payload: expectedState.user,
+    };
+
+    expect(authReducer(initialState, action)).toEqual(expectedState);
+  });
   it('calls AUTH_ERROR action', () => {
+    AsyncStorage.setItem('datespot-token', 'greatToken');
     initialState.token = 'bogusToken';
     initialState.user = {_id: 'userId'};
 
@@ -66,5 +81,6 @@ describe('authReducer', () => {
     };
 
     expect(authReducer(initialState, action)).toEqual(expectedState);
+    expect(AsyncStorage.removeItem).toBeCalledWith('datespot-token');
   });
 });
