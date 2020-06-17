@@ -42,6 +42,7 @@ export const loginUser = formData => async dispatch => {
       type: Types.LOGIN_SUCCESS,
       payload: res.data,
     });
+    await loadUser();
   } catch (err) {
     dispatch({
       type: Types.LOGIN_FAIL,
@@ -52,9 +53,12 @@ export const loginUser = formData => async dispatch => {
 
 export const loadUser = () => async dispatch => {
   try {
-    const token = await AsyncStorage.getItem('datespot-token');
+    const storageResponse = await AsyncStorage.getItem('datespot-token');
+
+    const token = JSON.parse(storageResponse).token;
+
     const config = {headers: {'x-auth-token': token}};
-    const res = await axios.get('http://localhost:4000/auth', config);
+    const res = await axios.get('http://localhost:4000/api/auth', config);
     dispatch({
       type: Types.USER_LOADED,
       payload: res.data,
