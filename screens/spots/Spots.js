@@ -14,7 +14,7 @@ export const Spots = ({navigation, auth: {isAuthenticated}, loadUser}) => {
     }
   }, []);
   return (
-    <View>
+    <View accessibilityLabel="spotsContainer">
       <Text>we are in spots</Text>
     </View>
   );
