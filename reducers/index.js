@@ -4,5 +4,5 @@ import spotReducer from './spotReducer';
 
 export default combineReducers({
   auth: authReducer,
-  spot: spotReducer,
+  spot: spotsReducer,
 });
