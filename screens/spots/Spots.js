@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {View, Text} from 'react-native';
+import {Card, Container} from 'native-base';
 import {connect} from 'react-redux';
 
 import {loadUser} from '../../actions/auth';
@@ -15,7 +16,7 @@ export const Spots = ({navigation, auth: {isAuthenticated}, loadUser}) => {
   }, []);
   return (
     <View accessibilityLabel="spotsContainer">
-      <Text>we are in spots</Text>
+      <Container accessibilityLabel="spotItemsContainer" />
     </View>
   );
 };

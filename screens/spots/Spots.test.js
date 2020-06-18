@@ -20,4 +20,10 @@ describe('Spots', () => {
 
     expect(spotsContainer.length).toBe(1);
   });
+  it('should display Spots available', () => {
+    const {getAllByA11yLabel} = render(<Spots {...defaultProps} />);
+    const spotItemsContainer = getAllByA11yLabel('spotItemsContainer');
+
+    expect(spotItemsContainer.length).toBe(1);
+  });
 });
