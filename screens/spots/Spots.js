@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
 import {
   Card,
   CardItem,
@@ -33,7 +33,7 @@ export const Spots = ({
     getSpots();
   }, []);
   return (
-    <Container accessibilityLabel="spotsContainer">
+    <Container accessibilityLabel="spotsContainer" style={styles.container}>
       <Content accessibilityLabel="spotItemsContainer">
         {spots !== null ? (
           spots.map(spot => {
@@ -43,7 +43,7 @@ export const Spots = ({
                   <Image
                     accessibilityLabel="imageElement"
                     source={{uri: spot.url}}
-                    style={{height: 200, width: null, flex: 1}}
+                    style={styles.imageContainer}
                   />
                 </CardItem>
                 <CardItem>
@@ -54,8 +54,11 @@ export const Spots = ({
                         type="FontAwesome"
                         name="heart-o"
                       />
-                      <Text>12 Likes</Text>
                     </Button>
+                    <Text>
+                      {spot.likes.length}{' '}
+                      {spot.likes.length === 1 ? 'Like' : 'Likes'}
+                    </Text>
                   </Left>
                 </CardItem>
                 <CardItem>
@@ -100,3 +103,14 @@ export default connect(
   mapStateToProps,
   {loadUser, getSpots},
 )(Spots);
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#F8F8F8',
+  },
+  imageContainer: {
+    height: 200,
+    width: null,
+    flex: 1,
+  },
+});

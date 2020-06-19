@@ -13,7 +13,24 @@ describe('Spots', () => {
         isAuthenticated: true,
       },
       loadUser: jest.fn(),
-      spot: {spots: null},
+      spot: {
+        spots: [
+          {
+            _id: 'spot1',
+            title: 'spot1Title',
+            url: 'spot1URL',
+            summary: 'spot1Summary',
+            likes: [{userId: 'user1'}],
+          },
+          {
+            _id: 'spot2',
+            title: 'spot2Title',
+            url: 'spot2URL',
+            summary: 'spot2Summary',
+            likes: [{userId: 'user1'}, {userId: 'user2'}],
+          },
+        ],
+      },
       getSpots: jest.fn(),
     };
   });
@@ -30,31 +47,11 @@ describe('Spots', () => {
     expect(spotItemsContainer.length).toBe(1);
   });
   it('should display two Spots when there are only two spots', () => {
-    defaultProps.spot.spots = [
-      {_id: 'spot1', title: 'spot1Title'},
-      {_id: 'spot2', title: 'spot2Title'},
-    ];
-
     const {getAllByA11yLabel} = render(<Spots {...defaultProps} />);
     const spotItemElement = getAllByA11yLabel('spotItemElement');
     expect(spotItemElement.length).toBe(2);
   });
   it('should display two Spots with images, titles and summary', () => {
-    defaultProps.spot.spots = [
-      {
-        _id: 'spot1',
-        title: 'spot1Title',
-        url: 'spot1URL',
-        summary: 'spot1Summary',
-      },
-      {
-        _id: 'spot2',
-        title: 'spot2Title',
-        url: 'spot2URL',
-        summary: 'spot2Summary',
-      },
-    ];
-
     const {getAllByA11yLabel, getByText} = render(<Spots {...defaultProps} />);
     const imageElement = getAllByA11yLabel('imageElement');
     const titleElement = getAllByA11yLabel('titleElement');
@@ -70,27 +67,12 @@ describe('Spots', () => {
     });
   });
   it('should display two Spots with buttons', () => {
-    defaultProps.spot.spots = [
-      {
-        _id: 'spot1',
-        title: 'spot1Title',
-        url: 'spot1URL',
-        summary: 'spot1Summary',
-      },
-      {
-        _id: 'spot2',
-        title: 'spot2Title',
-        url: 'spot2URL',
-        summary: 'spot2Summary',
-      },
-    ];
-
     const {getAllByA11yLabel} = render(<Spots {...defaultProps} />);
     const buttonElement = getAllByA11yLabel('buttonElement');
 
     expect(buttonElement.length).toBe(2);
   });
-  it('should a Spot with heart icon', () => {
+  it('should display a Spot with heart icon', () => {
     defaultProps.spot.spots = [
       {
         _id: 'spot1',
@@ -106,7 +88,18 @@ describe('Spots', () => {
 
     expect(likeElement.length).toBe(1);
   });
+  it('should display 2 likes for a spot', () => {
+    const {getByText} = render(<Spots {...defaultProps} />);
+
+    expect(getByText('2 Likes')).toBeTruthy();
+  });
+  it('should mention "like" for a spot that only has 1 like', () => {
+    const {getByText} = render(<Spots {...defaultProps} />);
+
+    expect(getByText('1 Like')).toBeTruthy();
+  });
   it('should display loading status when spots is null', () => {
+    defaultProps.spot.spots = null;
     const {getAllByA11yLabel} = render(<Spots {...defaultProps} />);
     const loadingElement = getAllByA11yLabel('loading');
 
