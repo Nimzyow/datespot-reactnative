@@ -106,7 +106,7 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#F8F8F8',
+    backgroundColor: 'rgb(246,246,246)',
   },
   imageContainer: {
     height: 200,
