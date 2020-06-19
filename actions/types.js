@@ -6,3 +6,4 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const USER_LOADED = 'USER_LOADED';
 
 export const GET_SPOTS = 'GET_SPOTS';
+export const SPOTS_ERROR = 'SPOTS_ERROR';
