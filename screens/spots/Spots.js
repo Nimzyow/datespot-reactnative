@@ -1,6 +1,16 @@
 import React, {useEffect} from 'react';
 import {View, Image} from 'react-native';
-import {Card, CardItem, Container, Content, Body, Text} from 'native-base';
+import {
+  Card,
+  CardItem,
+  Container,
+  Content,
+  Body,
+  Text,
+  Button,
+  Left,
+  Icon,
+} from 'native-base';
 import {connect} from 'react-redux';
 
 import {loadUser} from '../../actions/auth';
@@ -37,6 +47,18 @@ export const Spots = ({
                   />
                 </CardItem>
                 <CardItem>
+                  <Left>
+                    <Button transparent>
+                      <Icon
+                        accessibilityLabel="likeElement"
+                        type="FontAwesome"
+                        name="heart-o"
+                      />
+                      <Text>12 Likes</Text>
+                    </Button>
+                  </Left>
+                </CardItem>
+                <CardItem>
                   <Body>
                     <Text accessibilityLabel="titleElement">{spot.title}</Text>
                   </Body>
@@ -47,6 +69,14 @@ export const Spots = ({
                       {spot.summary}
                     </Text>
                   </Body>
+                </CardItem>
+                <CardItem
+                  header
+                  button
+                  onPress={() => alert('This is Card Header')}>
+                  <Button accessibilityLabel="buttonElement" danger>
+                    <Text>Find out more</Text>
+                  </Button>
                 </CardItem>
               </Card>
             );
