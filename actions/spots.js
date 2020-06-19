@@ -4,7 +4,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 export const getSpots = () => async dispatch => {
   try {
-    const res = await axios.get('http://localhost:4000/api/spots');
+    const storageResponse = await AsyncStorage.getItem('datespot-token');
+    const token = storageResponse;
+
+    const config = {headers: {'x-auth-token': token}};
+
+    const res = await axios.get('http://localhost:4000/api/spots', config);
 
     dispatch({
       type: Types.GET_SPOTS,

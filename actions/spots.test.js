@@ -12,6 +12,10 @@ describe('spot actions', () => {
     dispatch = jest.fn();
   });
   test('getSpots function dispatches to GET_SPOTS', async () => {
+    const defaultToken = 'defaultToken';
+
+    AsyncStorage.setItem('datespot-token', defaultToken);
+
     mockAxios.get.mockImplementationOnce(async () =>
       Promise.resolve({data: {spots: {title: 'someSpot'}}}),
     );
@@ -24,6 +28,9 @@ describe('spot actions', () => {
     });
     expect(mockAxios.get).toHaveBeenCalledWith(
       'http://localhost:4000/api/spots',
+      {
+        headers: {'x-auth-token': defaultToken},
+      },
     );
     expect(mockAxios.get).toHaveBeenCalledTimes(1);
   });
