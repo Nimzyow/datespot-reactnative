@@ -38,7 +38,14 @@ export const Spots = ({
                 </CardItem>
                 <CardItem>
                   <Body>
-                    <Text>{spot.title}</Text>
+                    <Text accessibilityLabel="titleElement">{spot.title}</Text>
+                  </Body>
+                </CardItem>
+                <CardItem>
+                  <Body>
+                    <Text accessibilityLabel="summaryElement">
+                      {spot.summary}
+                    </Text>
                   </Body>
                 </CardItem>
               </Card>
