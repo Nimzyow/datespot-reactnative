@@ -9,10 +9,11 @@ describe('Spots', () => {
     jest.clearAllMocks();
     defaultProps = {
       navigation: jest.fn(),
+      loadUser: jest.fn(),
+      getSpots: jest.fn(),
       auth: {
         isAuthenticated: true,
       },
-      loadUser: jest.fn(),
       spot: {
         spots: [
           {
@@ -31,7 +32,6 @@ describe('Spots', () => {
           },
         ],
       },
-      getSpots: jest.fn(),
     };
   });
   it('should display Spots container', () => {
@@ -53,10 +53,11 @@ describe('Spots', () => {
   });
   it('should display two Spots with images, titles and summary', () => {
     const {getAllByA11yLabel, getByText} = render(<Spots {...defaultProps} />);
-    const imageElement = getAllByA11yLabel('imageElement');
-    const titleElement = getAllByA11yLabel('titleElement');
-    const summaryElement = getAllByA11yLabel('summaryElement');
-    const allElements = [imageElement, titleElement, summaryElement];
+    const allElements = [
+      getAllByA11yLabel('imageElement'),
+      getAllByA11yLabel('titleElement'),
+      getAllByA11yLabel('summaryElement'),
+    ];
 
     allElements.forEach(element => {
       expect(element.length).toBe(2);
@@ -72,21 +73,11 @@ describe('Spots', () => {
 
     expect(buttonElement.length).toBe(2);
   });
-  it('should display a Spot with heart icon', () => {
-    defaultProps.spot.spots = [
-      {
-        _id: 'spot1',
-        title: 'spot1Title',
-        url: 'spot1URL',
-        summary: 'spot1Summary',
-        likes: [{userId: 'user1'}],
-      },
-    ];
-
+  it('should display two Spots with 2 heart icons', () => {
     const {getAllByA11yLabel} = render(<Spots {...defaultProps} />);
     const likeElement = getAllByA11yLabel('likeElement');
 
-    expect(likeElement.length).toBe(1);
+    expect(likeElement.length).toBe(2);
   });
   it('should display 2 likes for a spot', () => {
     const {getByText} = render(<Spots {...defaultProps} />);
