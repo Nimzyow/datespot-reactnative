@@ -27,4 +27,16 @@ describe('spot actions', () => {
     );
     expect(mockAxios.get).toHaveBeenCalledTimes(1);
   });
+  test('getSpots function dispatches to SPOTS_ERROR', async () => {
+    mockAxios.get.mockImplementationOnce(async () =>
+      Promise.reject({err: 'this is an error'}),
+    );
+    const response = await getSpots();
+    await response(dispatch);
+
+    expect(dispatch).toHaveBeenCalledWith({
+      type: Types.SPOTS_ERROR,
+      payload: {err: 'this is an error'},
+    });
+  });
 });

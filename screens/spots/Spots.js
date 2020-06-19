@@ -49,7 +49,7 @@ export const Spots = ({
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  spot: state.spots,
+  spot: state.spot,
 });
 
 export default connect(
