@@ -39,6 +39,16 @@ describe('Spots', () => {
     const spotItemElement = getAllByA11yLabel('spotItemElement');
     expect(spotItemElement.length).toBe(2);
   });
+  it('should display two Spots with images when there are only two spots', () => {
+    defaultProps.spot.spots = [
+      {_id: 'spot1', title: 'spot1Title', url: 'spot1URL'},
+      {_id: 'spot2', title: 'spot2Title', url: 'spot2URL'},
+    ];
+
+    const {getAllByA11yLabel} = render(<Spots {...defaultProps} />);
+    const imageElement = getAllByA11yLabel('imageElement');
+    expect(imageElement.length).toBe(2);
+  });
   it('should display loading status when spots is null', () => {
     const {getAllByA11yLabel} = render(<Spots {...defaultProps} />);
     const loadingElement = getAllByA11yLabel('loading');

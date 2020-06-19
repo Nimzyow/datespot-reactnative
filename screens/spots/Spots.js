@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {View, Text} from 'react-native';
-import {Card, CardItem, Header, Container, Content, Body} from 'native-base';
+import {View, Image} from 'react-native';
+import {Card, CardItem, Container, Content, Body, Text} from 'native-base';
 import {connect} from 'react-redux';
 
 import {loadUser} from '../../actions/auth';
@@ -29,6 +29,13 @@ export const Spots = ({
           spots.map(spot => {
             return (
               <Card key={spot._id} accessibilityLabel="spotItemElement">
+                <CardItem cardBody>
+                  <Image
+                    accessibilityLabel="imageElement"
+                    source={{uri: spot.url}}
+                    style={{height: 200, width: null, flex: 1}}
+                  />
+                </CardItem>
                 <CardItem>
                   <Body>
                     <Text>{spot.title}</Text>
