@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {View, Text} from 'react-native';
-import {Card, CardItem, Container, Content} from 'native-base';
+import {Card, CardItem, Header, Container, Content, Body} from 'native-base';
 import {connect} from 'react-redux';
 
 import {loadUser} from '../../actions/auth';
@@ -23,27 +23,27 @@ export const Spots = ({
     getSpots();
   }, []);
   return (
-    <View accessibilityLabel="spotsContainer">
-      <Container accessibilityLabel="spotItemsContainer">
-        <Content>
-          <Card>
-            {spots !== null ? (
-              spots.map(spot => {
-                return (
-                  <CardItem key={spot._id} accessibilityLabel="spotItemElement">
+    <Container accessibilityLabel="spotsContainer">
+      <Content accessibilityLabel="spotItemsContainer">
+        {spots !== null ? (
+          spots.map(spot => {
+            return (
+              <Card key={spot._id} accessibilityLabel="spotItemElement">
+                <CardItem>
+                  <Body>
                     <Text>{spot.title}</Text>
-                  </CardItem>
-                );
-              })
-            ) : (
-              <View accessibilityLabel="loading">
-                <Text>Loading</Text>
-              </View>
-            )}
-          </Card>
-        </Content>
-      </Container>
-    </View>
+                  </Body>
+                </CardItem>
+              </Card>
+            );
+          })
+        ) : (
+          <View accessibilityLabel="loading">
+            <Text>Loading</Text>
+          </View>
+        )}
+      </Content>
+    </Container>
   );
 };
 
