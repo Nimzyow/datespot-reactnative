@@ -48,7 +48,7 @@ export const Card = ({spot, navigation}) => {
         <Button
           accessibilityLabel="buttonElement"
           danger
-          onPress={() => navigation.navigate('spotDetails')}>
+          onPress={() => navigation.navigate('spotDetails', {spot: spot})}>
           <Text>Find out more</Text>
         </Button>
       </CardItem>

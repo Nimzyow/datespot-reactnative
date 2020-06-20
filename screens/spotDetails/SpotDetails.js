@@ -1,10 +1,27 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
+import {Container, Text} from 'native-base';
 
-export const SpotDetails = () => {
+export const SpotDetails = ({route, navigation}) => {
+  const {spot} = route.params;
   return (
-    <View>
+    <Container>
+      <Image
+        style={styles.imageContainer}
+        accessibilityLabel="imageElement"
+        source={{uri: spot.url}}
+      />
       <Text>Spot Details page</Text>
-    </View>
+    </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'rgb(246,246,246)',
+  },
+  imageContainer: {
+    height: 200,
+    width: null,
+  },
+});
