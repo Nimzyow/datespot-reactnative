@@ -10,7 +10,7 @@ import {
   Button,
 } from 'native-base';
 
-export const Card = ({spot}) => {
+export const Card = ({spot, navigation}) => {
   return (
     <CardNB key={spot._id} accessibilityLabel="spotItemElement">
       <CardItem cardBody>
@@ -45,7 +45,10 @@ export const Card = ({spot}) => {
         </Body>
       </CardItem>
       <CardItem header button onPress={() => alert('This is Card Header')}>
-        <Button accessibilityLabel="buttonElement" danger>
+        <Button
+          accessibilityLabel="buttonElement"
+          danger
+          onPress={() => navigation.navigate('spotDetails')}>
           <Text>Find out more</Text>
         </Button>
       </CardItem>
