@@ -29,7 +29,7 @@ export const Spots = ({
       <Content accessibilityLabel="spotItemsContainer">
         {spots !== null ? (
           spots.map(spot => {
-            return <Card key={spot._id} spot={spot} />;
+            return <Card key={spot._id} spot={spot} navigation={navigation} />;
           })
         ) : (
           <View accessibilityLabel="loading">
