@@ -20,6 +20,8 @@ describe('SpotDetails', () => {
             bestTimes: 'Avoid Wednesday',
             advice: 'this is great advice',
             comments: [{userId: 'user1', comment: 'this is a comment'}],
+            longitude: '1',
+            latitude: '2',
           },
         },
       },
@@ -44,6 +46,7 @@ describe('SpotDetails', () => {
       getAllByA11yLabel('timeIcon'),
       getAllByA11yLabel('dressIcon'),
       getAllByA11yLabel('infoIcon'),
+      getAllByA11yLabel('mapIcon'),
     ];
     const {
       avgCost,
@@ -57,6 +60,7 @@ describe('SpotDetails', () => {
       getByText(bestTimes),
       getByText(dress),
       getByText(description),
+      getByText('Tap here to see this spot on a map!'),
     ];
 
     iconToFind.forEach(element => {

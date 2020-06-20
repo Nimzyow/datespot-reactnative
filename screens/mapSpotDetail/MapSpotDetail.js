@@ -1,21 +1,31 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 
-export const MapSpotDetail = () => {
+export const MapSpotDetail = ({route, navigation}) => {
+  const {longitude, latitude, title} = route.params;
   return (
     <View style={{height: '100%'}}>
       <MapView
+        minZoomLevel={15}
+        zoomControlEnabled={false}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         region={{
-          latitude: 42.882004,
-          longitude: 74.582748,
+          latitude: parseFloat(latitude),
+          longitude: parseFloat(longitude),
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        showsUserLocation={true}
-      />
+        showsUserLocation={true}>
+        <Marker
+          coordinate={{
+            latitude: parseFloat(latitude),
+            longitude: parseFloat(longitude),
+          }}
+          title={title}
+        />
+      </MapView>
     </View>
   );
 };

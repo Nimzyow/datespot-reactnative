@@ -40,6 +40,19 @@ export const SpotDetails = ({route, navigation}) => {
           />
           <Text>{spot.dress}</Text>
         </View>
+        <View style={styles.iconText}>
+          <Icon accessibilityLabel="mapIcon" type="FontAwesome" name="map-o" />
+          <Text
+            onPress={() =>
+              navigation.navigate('mapSpotDetail', {
+                latitude: spot.latitude,
+                longitude: spot.longitude,
+                title: spot.title,
+              })
+            }>
+            Tap here to see this spot on a map!
+          </Text>
+        </View>
         <Icon
           accessibilityLabel="infoIcon"
           type="FontAwesome5"
@@ -47,9 +60,7 @@ export const SpotDetails = ({route, navigation}) => {
         />
         <Text>{spot.description}</Text>
         <Header title="Location" />
-        <Text onPress={() => navigation.navigate('mapSpotDetail')}>
-          Tap here to go to a map of this place
-        </Text>
+
         <View style={{height: '100%'}} />
       </ScrollView>
     </Container>
