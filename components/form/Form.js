@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { StyleSheet } from "react-native";
-import { Form, Text, Button } from "native-base";
+import React, {useState} from 'react';
+import {StyleSheet} from 'react-native';
+import {Form, Text, Button} from 'native-base';
 
-export const FormCreater = (props) => {
+import {Header} from '../header/Header';
+
+export const FormCreater = props => {
   const [state, setState] = useState(props.initialState);
 
-  const onChange = (e) => {
+  const onChange = e => {
     setState({
       ...state,
       ...e,
@@ -18,8 +20,7 @@ export const FormCreater = (props) => {
 
   return (
     <Form accessibilityLabel="formContainer">
-      <Text style={styles.header}>{props.formName}</Text>
-      {props.children({ state, onChange })}
+      {props.children({state, onChange})}
       <Button onPress={onSubmit}>
         <Text>{props.buttonLabel}</Text>
       </Button>
@@ -30,6 +31,6 @@ export const FormCreater = (props) => {
 const styles = StyleSheet.create({
   header: {
     fontSize: 30,
-    textAlign: "center",
+    textAlign: 'center',
   },
 });

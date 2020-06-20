@@ -1,57 +1,58 @@
-import React, { useState, useEffect } from "react";
-import { View } from "react-native";
-import { Text } from "native-base";
+import React, {useState, useEffect} from 'react';
+import {View} from 'react-native';
+import {Text} from 'native-base';
 
-import { connect } from "react-redux";
+import {connect} from 'react-redux';
 
-import { registerForm, loginForm } from "../../utilities/FormFarm";
-import { registerUser, loginUser } from "../../actions/auth";
+import {registerForm, loginForm} from '../../utilities/FormFarm';
+import {registerUser, loginUser} from '../../actions/auth';
+import {Header} from '../../components/header/Header';
 
 export const Authentication = ({
   registerUser,
   loginUser,
-  auth: { isAuthenticated },
+  auth: {isAuthenticated},
   navigation,
 }) => {
-  const [form, setForm] = useState("login");
+  const [form, setForm] = useState('login');
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigation.navigate("spots");
+      navigation.navigate('spots');
     }
   }, [isAuthenticated]);
 
-  const handleSubmit = async (state) => {
-    if (form === "login") {
+  const handleSubmit = async state => {
+    if (form === 'login') {
       await loginUser(state);
-    } else if (form === "register") {
+    } else if (form === 'register') {
       await registerUser(state);
     }
   };
 
   return (
     <View>
-      {form === "register" ? (
+      {form === 'register' ? (
         <View>
+          <Header title={form} />
           {registerForm(handleSubmit)}
           <Text
             onPress={() => {
-              setForm("login");
+              setForm('login');
             }}
-            testID="loginHere"
-          >
+            testID="loginHere">
             Registered already? Press here to sign in
           </Text>
         </View>
       ) : (
         <View>
+          <Header title={form} />
           {loginForm(handleSubmit)}
           <Text
             onPress={() => {
-              setForm("register");
+              setForm('register');
             }}
-            testID="registerHere"
-          >
+            testID="registerHere">
             Not Registered yet? Press here to register
           </Text>
         </View>
@@ -60,11 +61,14 @@ export const Authentication = ({
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, {
-  registerUser,
-  loginUser,
-})(Authentication);
+export default connect(
+  mapStateToProps,
+  {
+    registerUser,
+    loginUser,
+  },
+)(Authentication);

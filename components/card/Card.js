@@ -44,7 +44,7 @@ export const Card = ({spot, navigation}) => {
           <Text accessibilityLabel="summaryElement">{spot.summary}</Text>
         </Body>
       </CardItem>
-      <CardItem header button onPress={() => alert('This is Card Header')}>
+      <CardItem header button>
         <Button
           accessibilityLabel="buttonElement"
           danger
