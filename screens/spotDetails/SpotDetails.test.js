@@ -43,13 +43,20 @@ describe('SpotDetails', () => {
       getAllByA11yLabel('moneyIcon'),
       getAllByA11yLabel('timeIcon'),
       getAllByA11yLabel('dressIcon'),
+      getAllByA11yLabel('infoIcon'),
     ];
-    const {avgCost, bestTimes, dress} = defaultProps.route.params.spot;
+    const {
+      avgCost,
+      bestTimes,
+      dress,
+      description,
+    } = defaultProps.route.params.spot;
 
     const textToFind = [
       getByText(avgCost),
       getByText(bestTimes),
       getByText(dress),
+      getByText(description),
     ];
 
     iconToFind.forEach(element => {

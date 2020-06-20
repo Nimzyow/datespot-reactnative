@@ -34,6 +34,13 @@ export const SpotDetails = ({route, navigation}) => {
         />
         <Text>{spot.dress}</Text>
       </View>
+      <Icon
+        accessibilityLabel="infoIcon"
+        type="FontAwesome5"
+        name="info-circle"
+      />
+      <Text>{spot.description}</Text>
+      <Header title="Location" />
     </Container>
   );
 };
