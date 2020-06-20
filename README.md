@@ -144,3 +144,6 @@ It's proving to be a very interesting experience and I look forward to expanding
 - button on footer should navigate user to profile page []
 - plan what should be in profile page and what it should look like []
 - TDD profile page []
+- TDD like function, action, reducer []
+- TDD comment function, action, reducer []
+- Create Spinner to show loading state
