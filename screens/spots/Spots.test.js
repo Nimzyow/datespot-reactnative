@@ -1,5 +1,5 @@
 import React from 'react';
-import {fireEvent, render} from 'react-native-testing-library';
+import {render} from 'react-native-testing-library';
 
 import {Spots} from './Spots';
 
