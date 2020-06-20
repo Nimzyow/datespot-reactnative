@@ -19,7 +19,18 @@ describe('SpotDetails', () => {
             dress: 'Casual',
             bestTimes: 'Avoid Wednesday',
             advice: 'this is great advice',
-            comments: [{userId: 'user1', comment: 'this is a comment'}],
+            comments: [
+              {
+                _id: 'commentId1',
+                userId: 'user1',
+                comment: 'this is a comment',
+              },
+              {
+                _id: 'commentId2',
+                userId: 'user2',
+                comment: 'this is a second comment',
+              },
+            ],
             longitude: '1',
             latitude: '2',
           },
@@ -70,5 +81,17 @@ describe('SpotDetails', () => {
     textToFind.forEach(element => {
       expect(element).toBeTruthy();
     });
+  });
+  it('should display "no feedback yet" if there is no feedback', () => {
+    defaultProps.route.params.spot.comments = [];
+    const {getByText} = render(<SpotDetails {...defaultProps} />);
+    expect(getByText('No feedback yet!')).toBeTruthy();
+  });
+  it('should display all comments in feedback', () => {
+    const {getAllByA11yLabel} = render(<SpotDetails {...defaultProps} />);
+
+    const commentElement = getAllByA11yLabel('commentElement');
+
+    expect(commentElement.length).toBe(2);
   });
 });

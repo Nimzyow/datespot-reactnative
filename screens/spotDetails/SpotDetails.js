@@ -6,6 +6,17 @@ import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {Header} from '../../components/header/Header';
 
 export const SpotDetails = ({route, navigation}) => {
+  const getComments = comments => {
+    if (comments.length !== 0) {
+      return comments.map(comment => (
+        <View key={comment._id} accessibilityLabel="commentElement">
+          <Text>{comment.comment}</Text>
+        </View>
+      ));
+    }
+    return <Text>No feedback yet!</Text>;
+  };
+
   const {spot} = route.params;
   return (
     <Container>
@@ -59,8 +70,8 @@ export const SpotDetails = ({route, navigation}) => {
           name="info-circle"
         />
         <Text>{spot.description}</Text>
-        <Header title="Location" />
-
+        <Header title="Feedback on this Spot" />
+        {getComments(spot.comments)}
         <View style={{height: '100%'}} />
       </ScrollView>
     </Container>
