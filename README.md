@@ -137,7 +137,7 @@ It's proving to be a very interesting experience and I look forward to expanding
 - create spot details page [x]
 - find out more button on spots page should navigate to spot details page [x]
 - plan what should be in spot details page and what it should look like [x]
-- TDD spot details page []
+- TDD spot details page [x]
 - plan footer (should have home button, profile button at least) []
 - TDD footer []
 - create profile page []
