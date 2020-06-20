@@ -131,3 +131,16 @@ Though it may seem simple to create the React Native version of DateSpot since t
 An example is learning to use react-native-testing-library to perform my tests and mocking AsyncStorage for unit testing.
 
 It's proving to be a very interesting experience and I look forward to expanding my knowledge further the more I TDD with React Native.
+
+# TODO
+
+- create spot details page []
+- find out more button on spots page should navigate to spot details page []
+- plan what should be in spot details page and what it should look like []
+- TDD spot details page []
+- plan footer (should have home button, profile button at least) []
+- TDD footer []
+- create profile page []
+- button on footer should navigate user to profile page []
+- plan what should be in profile page and what it should look like []
+- TDD profile page []

@@ -1,20 +1,12 @@
 import React, {useEffect} from 'react';
-import {View, Image, StyleSheet} from 'react-native';
-import {
-  Card,
-  CardItem,
-  Container,
-  Content,
-  Body,
-  Text,
-  Button,
-  Left,
-  Icon,
-} from 'native-base';
+import {View, StyleSheet} from 'react-native';
+import {Container, Content, Text} from 'native-base';
 import {connect} from 'react-redux';
 
 import {loadUser} from '../../actions/auth';
 import {getSpots} from '../../actions/spots';
+
+import {Card} from '../../components/card/Card';
 
 export const Spots = ({
   navigation,
@@ -37,52 +29,7 @@ export const Spots = ({
       <Content accessibilityLabel="spotItemsContainer">
         {spots !== null ? (
           spots.map(spot => {
-            return (
-              <Card key={spot._id} accessibilityLabel="spotItemElement">
-                <CardItem cardBody>
-                  <Image
-                    accessibilityLabel="imageElement"
-                    source={{uri: spot.url}}
-                    style={styles.imageContainer}
-                  />
-                </CardItem>
-                <CardItem>
-                  <Left>
-                    <Button transparent>
-                      <Icon
-                        accessibilityLabel="likeElement"
-                        type="FontAwesome"
-                        name="heart-o"
-                      />
-                    </Button>
-                    <Text>
-                      {spot.likes.length}{' '}
-                      {spot.likes.length === 1 ? 'Like' : 'Likes'}
-                    </Text>
-                  </Left>
-                </CardItem>
-                <CardItem>
-                  <Body>
-                    <Text accessibilityLabel="titleElement">{spot.title}</Text>
-                  </Body>
-                </CardItem>
-                <CardItem>
-                  <Body>
-                    <Text accessibilityLabel="summaryElement">
-                      {spot.summary}
-                    </Text>
-                  </Body>
-                </CardItem>
-                <CardItem
-                  header
-                  button
-                  onPress={() => alert('This is Card Header')}>
-                  <Button accessibilityLabel="buttonElement" danger>
-                    <Text>Find out more</Text>
-                  </Button>
-                </CardItem>
-              </Card>
-            );
+            return <Card key={spot._id} spot={spot} />;
           })
         ) : (
           <View accessibilityLabel="loading">

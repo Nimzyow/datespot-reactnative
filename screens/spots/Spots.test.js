@@ -1,5 +1,5 @@
 import React from 'react';
-import {fireEvent, render} from 'react-native-testing-library';
+import {render} from 'react-native-testing-library';
 
 import {Spots} from './Spots';
 
@@ -51,44 +51,7 @@ describe('Spots', () => {
     const spotItemElement = getAllByA11yLabel('spotItemElement');
     expect(spotItemElement.length).toBe(2);
   });
-  it('should display two Spots with images, titles and summary', () => {
-    const {getAllByA11yLabel, getByText} = render(<Spots {...defaultProps} />);
-    const allElements = [
-      getAllByA11yLabel('imageElement'),
-      getAllByA11yLabel('titleElement'),
-      getAllByA11yLabel('summaryElement'),
-    ];
 
-    allElements.forEach(element => {
-      expect(element.length).toBe(2);
-    });
-    defaultProps.spot.spots.forEach(element => {
-      expect(getByText(element.title)).toBeTruthy();
-      expect(getByText(element.summary)).toBeTruthy();
-    });
-  });
-  it('should display two Spots with buttons', () => {
-    const {getAllByA11yLabel} = render(<Spots {...defaultProps} />);
-    const buttonElement = getAllByA11yLabel('buttonElement');
-
-    expect(buttonElement.length).toBe(2);
-  });
-  it('should display two Spots with 2 heart icons', () => {
-    const {getAllByA11yLabel} = render(<Spots {...defaultProps} />);
-    const likeElement = getAllByA11yLabel('likeElement');
-
-    expect(likeElement.length).toBe(2);
-  });
-  it('should display 2 likes for a spot', () => {
-    const {getByText} = render(<Spots {...defaultProps} />);
-
-    expect(getByText('2 Likes')).toBeTruthy();
-  });
-  it('should mention "like" for a spot that only has 1 like', () => {
-    const {getByText} = render(<Spots {...defaultProps} />);
-
-    expect(getByText('1 Like')).toBeTruthy();
-  });
   it('should display loading status when spots is null', () => {
     defaultProps.spot.spots = null;
     const {getAllByA11yLabel} = render(<Spots {...defaultProps} />);
