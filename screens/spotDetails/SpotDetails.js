@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet, ScrollView} from 'react-native';
 import {Container, Text, Icon} from 'native-base';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 
 import {Header} from '../../components/header/Header';
 
@@ -8,39 +9,49 @@ export const SpotDetails = ({route, navigation}) => {
   const {spot} = route.params;
   return (
     <Container>
-      <Image
-        style={styles.imageContainer}
-        accessibilityLabel="imageElement"
-        source={{uri: spot.url}}
-      />
-      <Header title="info at a glance" />
-      <View style={styles.iconText}>
-        <Icon
-          accessibilityLabel="moneyIcon"
-          type="FontAwesome5"
-          name="money-bill-wave"
+      <ScrollView>
+        <Image
+          style={styles.imageContainer}
+          accessibilityLabel="imageElement"
+          source={{uri: spot.url}}
         />
-        <Text>{spot.avgCost}</Text>
-      </View>
-      <View style={styles.iconText}>
-        <Icon accessibilityLabel="timeIcon" type="FontAwesome" name="clock-o" />
-        <Text>{spot.bestTimes}</Text>
-      </View>
-      <View style={styles.iconText}>
+        <Header title="info at a glance" />
+        <View style={styles.iconText}>
+          <Icon
+            accessibilityLabel="moneyIcon"
+            type="FontAwesome5"
+            name="money-bill-wave"
+          />
+          <Text>{spot.avgCost}</Text>
+        </View>
+        <View style={styles.iconText}>
+          <Icon
+            accessibilityLabel="timeIcon"
+            type="FontAwesome"
+            name="clock-o"
+          />
+          <Text>{spot.bestTimes}</Text>
+        </View>
+        <View style={styles.iconText}>
+          <Icon
+            accessibilityLabel="dressIcon"
+            type="FontAwesome5"
+            name="user-astronaut"
+          />
+          <Text>{spot.dress}</Text>
+        </View>
         <Icon
-          accessibilityLabel="dressIcon"
+          accessibilityLabel="infoIcon"
           type="FontAwesome5"
-          name="user-astronaut"
+          name="info-circle"
         />
-        <Text>{spot.dress}</Text>
-      </View>
-      <Icon
-        accessibilityLabel="infoIcon"
-        type="FontAwesome5"
-        name="info-circle"
-      />
-      <Text>{spot.description}</Text>
-      <Header title="Location" />
+        <Text>{spot.description}</Text>
+        <Header title="Location" />
+        <Text onPress={() => navigation.navigate('mapSpotDetail')}>
+          Tap here to go to a map of this place
+        </Text>
+        <View style={{height: '100%'}} />
+      </ScrollView>
     </Container>
   );
 };
@@ -56,5 +67,8 @@ const styles = StyleSheet.create({
   iconText: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  map: {
+    height: '100%',
   },
 });

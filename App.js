@@ -12,6 +12,7 @@ import {Provider} from 'react-redux';
 import store from './store';
 import {Home} from './screens/home/Home';
 import {SpotDetails} from './screens/spotDetails/SpotDetails';
+import {MapSpotDetail} from "./screens/mapSpotDetail/MapSpotDetail"
 import Spots from './screens/spots/Spots';
 import Authentication from './screens/authentication/Authentication';
 
@@ -41,6 +42,11 @@ const App = () => {
             name="spotDetails"
             component={SpotDetails}
             options={{title: 'Spot Details'}}
+          />
+          <Stack.Screen
+            name="mapSpotDetail"
+            component={MapSpotDetail}
+            options={{title: 'map of Spot'}}
           />
         </Stack.Navigator>
       </NavigationContainer>
