@@ -7,6 +7,7 @@ import {loadUser} from '../../actions/auth';
 import {getSpots} from '../../actions/spots';
 
 import {Card} from '../../components/card/Card';
+import {Footer} from '../../components/footer/Footer';
 
 export const Spots = ({
   navigation,
@@ -37,6 +38,7 @@ export const Spots = ({
           </View>
         )}
       </Content>
+      <Footer navigation={navigation} />
     </Container>
   );
 };

@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, Image, StyleSheet, ScrollView} from 'react-native';
 import {Container, Text, Icon} from 'native-base';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 
 import {Header} from '../../components/header/Header';
+import {Footer} from '../../components/footer/Footer';
 
 export const SpotDetails = ({route, navigation}) => {
   const getComments = comments => {
@@ -74,6 +74,7 @@ export const SpotDetails = ({route, navigation}) => {
         {getComments(spot.comments)}
         <View style={{height: '100%'}} />
       </ScrollView>
+      <Footer navigation={navigation} />
     </Container>
   );
 };
