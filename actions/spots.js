@@ -64,7 +64,7 @@ export const removeFromLikeCount = toRemove => async dispatch => {
   try {
     await axios.post(`/api/spots/${spotId}/likeRemove`, toSend, config);
     dispatch({
-      type: Types.REMOVE_FROM_LIKE_TABLE,
+      type: Types.REMOVE_LIKE,
       payload: toRemove,
     });
   } catch (err) {

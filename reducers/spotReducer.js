@@ -51,6 +51,22 @@ export default (state = initialState, action) => {
       return {
         ...state,
       };
+    case Types.REMOVE_LIKE:
+      const spotsToFilterForRemoval = [...state.spots];
+      const spotFilteredForRemoval = spotsToFilterForRemoval.filter(
+        spot => spot._id === action.payload.spotId,
+      );
+
+      const removeLikeFromSpotsFiltered = spotFilteredForRemoval[0].likes.filter(
+        like => like.userId !== action.payload.userId,
+      );
+
+      state.spots.filter(
+        spot => spot._id === action.payload.spotId,
+      )[0].likes = removeLikeFromSpotsFiltered;
+      return {
+        ...state,
+      };
     default:
       return state;
   }
