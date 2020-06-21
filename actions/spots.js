@@ -22,3 +22,10 @@ export const getSpots = () => async dispatch => {
     });
   }
 };
+
+export const filterSpotsBasedOnLike = user => dispatch => {
+  dispatch({
+    type: Types.FILTER_BY_USER_LIKES,
+    payload: user,
+  });
+};
