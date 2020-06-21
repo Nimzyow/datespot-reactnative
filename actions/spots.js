@@ -51,3 +51,26 @@ export const addToLikeCount = toAdd => async dispatch => {
     });
   }
 };
+
+export const removeFromLikeCount = toRemove => async dispatch => {
+  const {spotId, userId} = toRemove;
+
+  const toSend = {userId};
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  try {
+    await axios.post(`/api/spots/${spotId}/likeRemove`, toSend, config);
+    dispatch({
+      type: Types.REMOVE_FROM_LIKE_TABLE,
+      payload: toRemove,
+    });
+  } catch (err) {
+    dispatch({
+      type: Types.LIKES_ERROR,
+      payload: err,
+    });
+  }
+};

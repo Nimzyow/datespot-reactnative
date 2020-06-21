@@ -3,7 +3,12 @@ import * as Types from './types';
 import AsyncStorage from '@react-native-community/async-storage';
 jest.mock('axios');
 
-import {getSpots, filterSpotsBasedOnLike, addToLikeCount} from './spots';
+import {
+  getSpots,
+  filterSpotsBasedOnLike,
+  addToLikeCount,
+  removeFromLikeCount,
+} from './spots';
 
 describe('spot actions', () => {
   let dispatch;
@@ -83,5 +88,32 @@ describe('spot actions', () => {
         headers: {'Content-Type': 'application/json'},
       },
     );
+  });
+  test('removeFromLikeCount function dispatches to REMOVE_LIKE', async () => {
+    mockAxios.post.mockImplementationOnce(
+      async () => await Promise.resolve({data: 'some likes'}),
+    );
+    const toRemove = {
+      spotId: 'spotId',
+      userId: {_id: 'user_id'},
+    };
+    const toSend = {
+      userId: toRemove.userId,
+    };
+    const response = await removeFromLikeCount(toRemove);
+    await response(dispatch);
+
+    expect(dispatch).toHaveBeenCalledWith({
+      type: Types.REMOVE_LIKE,
+      payload: toRemove,
+    });
+    expect(mockAxios.post).toHaveBeenCalledWith(
+      `/api/spots/${toRemove.spotId}/likeRemove`,
+      toSend,
+      {
+        headers: {'Content-Type': 'application/json'},
+      },
+    );
+    expect(mockAxios.post).toHaveBeenCalledTimes(1);
   });
 });
