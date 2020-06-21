@@ -34,6 +34,23 @@ export default (state = initialState, action) => {
         };
       }
       return state;
+    case Types.ADD_LIKE:
+      const spotsToFilter = [...state.spots];
+      const spotFiltered = spotsToFilter.filter(
+        spot => spot._id === action.payload.spot._id,
+      );
+
+      const addLikeToSpotsFiltered = (spotFiltered[0].likes = [
+        ...action.payload.likes,
+      ]);
+
+      state.spots.filter(
+        spot => spot._id === action.payload.spot._id,
+      )[0].likes = addLikeToSpotsFiltered;
+
+      return {
+        ...state,
+      };
     default:
       return state;
   }

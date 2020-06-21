@@ -3,7 +3,7 @@ import * as Types from './types';
 import AsyncStorage from '@react-native-community/async-storage';
 jest.mock('axios');
 
-import {getSpots, filterSpotsBasedOnLike} from './spots';
+import {getSpots, filterSpotsBasedOnLike, addToLikeCount} from './spots';
 
 describe('spot actions', () => {
   let dispatch;
@@ -57,5 +57,31 @@ describe('spot actions', () => {
       type: Types.FILTER_BY_USER_LIKES,
       payload: user,
     });
+  });
+  test('addToLikeCount function dispatches to ADD_TO_LIKE_TABLE', async () => {
+    mockAxios.post.mockImplementationOnce(
+      async () => await Promise.resolve({data: 'some likes'}),
+    );
+    const toAdd = {
+      spotId: 'spotId',
+      userId: {_id: 'user_id'},
+    };
+    const toSend = {
+      userId: toAdd.userId,
+    };
+    const response = await addToLikeCount(toAdd);
+    await response(dispatch);
+
+    expect(dispatch).toHaveBeenCalledWith({
+      type: Types.ADD_LIKE,
+      payload: 'some likes',
+    });
+    expect(mockAxios.post).toHaveBeenCalledWith(
+      `/api/spots/${toAdd.spotId}/like`,
+      toSend,
+      {
+        headers: {'Content-Type': 'application/json'},
+      },
+    );
   });
 });

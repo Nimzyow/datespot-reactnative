@@ -61,4 +61,17 @@ describe('spotReducer', () => {
 
     expect(spotReducer(initialState, action)).toEqual(expectedState);
   });
+  test('changes state on add like', () => {
+    const action = {
+      type: Types.ADD_LIKE,
+      payload: {spot: {_id: 'oneId', likes: []}, likes: [{_id: 'twoId'}]},
+    };
+    initialState.spots = [{_id: action.payload.spot._id, likes: []}];
+
+    expectedState.spots = [
+      {_id: action.payload.spot._id, likes: [action.payload.likes[0]]},
+    ];
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
 });

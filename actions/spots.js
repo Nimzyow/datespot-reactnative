@@ -29,3 +29,25 @@ export const filterSpotsBasedOnLike = user => dispatch => {
     payload: user,
   });
 };
+
+export const addToLikeCount = toAdd => async dispatch => {
+  const {spotId, userId} = toAdd;
+  const toSend = {userId};
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  try {
+    const res = await axios.post(`/api/spots/${spotId}/like`, toSend, config);
+    dispatch({
+      type: Types.ADD_LIKE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: Types.LIKES_ERROR,
+      payload: err,
+    });
+  }
+};

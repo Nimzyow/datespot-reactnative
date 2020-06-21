@@ -8,3 +8,4 @@ export const USER_LOADED = 'USER_LOADED';
 export const GET_SPOTS = 'GET_SPOTS';
 export const SPOTS_ERROR = 'SPOTS_ERROR';
 export const FILTER_BY_USER_LIKES = 'FILTER_BY_USER_LIKES';
+export const ADD_LIKE = 'ADD_LIKE';
