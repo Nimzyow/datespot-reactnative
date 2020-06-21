@@ -6,6 +6,7 @@ import {Profile} from './Profile';
 describe('Profile', () => {
   let defaultProps;
   beforeEach(() => {
+    jest.clearAllMocks();
     defaultProps = {
       auth: {
         user: {
@@ -14,6 +15,7 @@ describe('Profile', () => {
           email: 'testy@testy.com',
         },
       },
+      filterSpotsBasedOnLike: jest.fn(),
     };
   });
   it('should display Profile container', () => {
@@ -46,5 +48,12 @@ describe('Profile', () => {
     });
     expect(getByText(defaultProps.auth.user.username)).toBeTruthy();
     expect(getByText(defaultProps.auth.user.email)).toBeTruthy();
+  });
+  it('should call filterSpotsBasedOnLike on mount', () => {
+    render(<Profile {...defaultProps} />);
+    expect(defaultProps.filterSpotsBasedOnLike).toHaveBeenCalledTimes(1);
+    expect(defaultProps.filterSpotsBasedOnLike).toHaveBeenCalledWith(
+      defaultProps.auth.user,
+    );
   });
 });

@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text, Icon, Container, Content} from 'native-base';
 
 import {connect} from 'react-redux';
 
+import {filterSpotsBasedOnLike} from '../../actions/spots';
 import {Footer} from '../../components/footer/Footer';
 
-export const Profile = ({navigation, auth: {user}}) => {
+export const Profile = ({navigation, auth: {user}, filterSpotsBasedOnLike}) => {
+  useEffect(() => {
+    filterSpotsBasedOnLike(user);
+  });
   return (
     <Container accessibilityLabel="profileContainer">
       <Content>
@@ -39,4 +43,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(Profile);
+export default connect(
+  mapStateToProps,
+  {filterSpotsBasedOnLike},
+)(Profile);

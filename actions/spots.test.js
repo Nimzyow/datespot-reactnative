@@ -3,7 +3,7 @@ import * as Types from './types';
 import AsyncStorage from '@react-native-community/async-storage';
 jest.mock('axios');
 
-import {getSpots} from './spots';
+import {getSpots, filterSpotsBasedOnLike} from './spots';
 
 describe('spot actions', () => {
   let dispatch;
@@ -44,6 +44,18 @@ describe('spot actions', () => {
     expect(dispatch).toHaveBeenCalledWith({
       type: Types.SPOTS_ERROR,
       payload: {err: 'this is an error'},
+    });
+  });
+  test('filterSpotsBasedOnLike function dispatches to FILTER_BY_USER_LIKES', async () => {
+    const user = {
+      user: {_id: 'userId'},
+    };
+    const response = await filterSpotsBasedOnLike(user);
+    await response(dispatch);
+
+    expect(dispatch).toHaveBeenCalledWith({
+      type: Types.FILTER_BY_USER_LIKES,
+      payload: user,
     });
   });
 });

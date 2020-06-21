@@ -8,6 +8,7 @@ describe('spotReducer', () => {
     initialState = {
       spots: null,
       error: null,
+      filteredByLiked: null,
     };
     expectedState = {...initialState};
   });
@@ -36,11 +37,28 @@ describe('spotReducer', () => {
       type: Types.SPOTS_ERROR,
       payload: {err: 'some error'},
     };
-    const expectedState = {
-      spots: null,
-      error: action.payload,
-    };
+
+    expectedState.error = action.payload;
 
     expect(spotReducer(undefined, action)).toEqual(expectedState);
+  });
+  test('changes state on filtered by user likes', () => {
+    const action = {
+      type: Types.FILTER_BY_USER_LIKES,
+      payload: {_id: 'userId'},
+    };
+    initialState.spots = [
+      {_id: 'oneId', likes: [{userId: action.payload._id}]},
+      {
+        _id: 'twoId',
+        likes: [{userId: 'threeId'}],
+      },
+    ];
+    expectedState.spots = initialState.spots;
+    expectedState.filteredByLiked = [
+      {_id: 'oneId', likes: [{userId: action.payload._id}]},
+    ];
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
   });
 });
