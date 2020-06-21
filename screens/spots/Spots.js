@@ -19,6 +19,8 @@ export const Spots = ({
   loadUser,
   spot: {spots},
   getSpots,
+  addToLikeCount,
+  removeFromLikeCount,
 }) => {
   useEffect(() => {
     loadUser();
@@ -40,8 +42,8 @@ export const Spots = ({
                 spot={spot}
                 navigation={navigation}
                 user={user}
-                addToLikeCount={() => addToLikeCount()}
-                removeFromLikeCount={() => removeFromLikeCount()}
+                addToLikeCount={value => addToLikeCount(value)}
+                removeFromLikeCount={value => removeFromLikeCount(value)}
               />
             );
           })
@@ -63,7 +65,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {loadUser, getSpots},
+  {loadUser, getSpots, addToLikeCount, removeFromLikeCount},
 )(Spots);
 
 const styles = StyleSheet.create({

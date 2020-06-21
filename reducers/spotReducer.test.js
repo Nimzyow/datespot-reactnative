@@ -100,4 +100,14 @@ describe('spotReducer', () => {
 
     expect(spotReducer(initialState, action)).toEqual(expectedState);
   });
+  test('changes state on likes error', () => {
+    const action = {
+      type: Types.LIKES_ERROR,
+      payload: 'some sort error',
+    };
+
+    expectedState.error = action.payload;
+
+    expect(spotReducer(undefined, action)).toEqual(expectedState);
+  });
 });

@@ -64,6 +64,10 @@ describe('spot actions', () => {
     });
   });
   test('addToLikeCount function dispatches to ADD_TO_LIKE_TABLE', async () => {
+    const defaultToken = 'defaultToken';
+
+    AsyncStorage.setItem('datespot-token', defaultToken);
+
     mockAxios.post.mockImplementationOnce(
       async () => await Promise.resolve({data: 'some likes'}),
     );
@@ -82,10 +86,13 @@ describe('spot actions', () => {
       payload: 'some likes',
     });
     expect(mockAxios.post).toHaveBeenCalledWith(
-      `/api/spots/${toAdd.spotId}/like`,
+      `http://localhost:4000/api/spots/${toAdd.spotId}/like`,
       toSend,
       {
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': defaultToken,
+        },
       },
     );
   });
@@ -108,12 +115,28 @@ describe('spot actions', () => {
       payload: toRemove,
     });
     expect(mockAxios.post).toHaveBeenCalledWith(
-      `/api/spots/${toRemove.spotId}/likeRemove`,
+      `http://localhost:4000/api/spots/${toRemove.spotId}/likeRemove`,
       toSend,
       {
         headers: {'Content-Type': 'application/json'},
       },
     );
     expect(mockAxios.post).toHaveBeenCalledTimes(1);
+  });
+  test('removeFromLikeCount function failure dispatches to LIKES_ERROR', async () => {
+    mockAxios.post.mockImplementationOnce(
+      async () => await Promise.reject({err: {msg: 'some error'}}),
+    );
+    const toAdd = {
+      spotId: 'spotId',
+      userId: {_id: 'user_id'},
+    };
+    const response = await removeFromLikeCount(toAdd);
+    await response(dispatch);
+
+    expect(dispatch).toHaveBeenCalledWith({
+      type: Types.LIKES_ERROR,
+      payload: {err: {msg: 'some error'}},
+    });
   });
 });

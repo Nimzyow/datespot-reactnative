@@ -67,6 +67,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
       };
+      case Types.LIKES_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }

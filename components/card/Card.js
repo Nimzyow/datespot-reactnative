@@ -42,6 +42,8 @@ export const Card = ({
 
   const setLikeState = () => {
     if (color === 'black') {
+      console.log('setLikeSttate', spot._id);
+
       addToLikeCount({spotId: spot._id, userId: user._id});
     } else {
       removeFromLikeCount({spotId: spot._id, userId: user._id});

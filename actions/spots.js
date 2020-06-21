@@ -31,15 +31,27 @@ export const filterSpotsBasedOnLike = user => dispatch => {
 };
 
 export const addToLikeCount = toAdd => async dispatch => {
+  console.log('DO WE EVEN GET HERE?');
+
   const {spotId, userId} = toAdd;
+  console.log('SPOTID AND USERID', spotId, userId);
+
   const toSend = {userId};
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+
   try {
-    const res = await axios.post(`/api/spots/${spotId}/like`, toSend, config);
+    const storageResponse = await AsyncStorage.getItem('datespot-token');
+    const token = storageResponse;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': token,
+      },
+    };
+    const res = await axios.post(
+      `http://localhost:4000/api/spots/${spotId}/like`,
+      toSend,
+      config,
+    );
     dispatch({
       type: Types.ADD_LIKE,
       payload: res.data,
@@ -62,7 +74,11 @@ export const removeFromLikeCount = toRemove => async dispatch => {
     },
   };
   try {
-    await axios.post(`/api/spots/${spotId}/likeRemove`, toSend, config);
+    await axios.post(
+      `http://localhost:4000/api/spots/${spotId}/likeRemove`,
+      toSend,
+      config,
+    );
     dispatch({
       type: Types.REMOVE_LIKE,
       payload: toRemove,
