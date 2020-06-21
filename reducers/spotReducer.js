@@ -3,7 +3,7 @@ import * as Types from '../actions/types';
 const initialState = {
   spots: null,
   error: null,
-  filteredByLiked: null,
+  filteredByLiked: [],
 };
 
 export default (state = initialState, action) => {

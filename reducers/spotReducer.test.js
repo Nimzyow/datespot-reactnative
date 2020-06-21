@@ -8,7 +8,7 @@ describe('spotReducer', () => {
     initialState = {
       spots: null,
       error: null,
-      filteredByLiked: null,
+      filteredByLiked: [],
     };
     expectedState = {...initialState};
   });

@@ -6,11 +6,18 @@ import {connect} from 'react-redux';
 
 import {filterSpotsBasedOnLike} from '../../actions/spots';
 import {Footer} from '../../components/footer/Footer';
+import {Card} from '../../components/card/Card';
+import {Header} from '../../components/header/Header';
 
-export const Profile = ({navigation, auth: {user}, filterSpotsBasedOnLike}) => {
+export const Profile = ({
+  navigation,
+  auth: {user},
+  spot: {spots, filteredByLiked},
+  filterSpotsBasedOnLike,
+}) => {
   useEffect(() => {
     filterSpotsBasedOnLike(user);
-  });
+  }, [spots]);
   return (
     <Container accessibilityLabel="profileContainer">
       <Content>
@@ -26,6 +33,18 @@ export const Profile = ({navigation, auth: {user}, filterSpotsBasedOnLike}) => {
           <Icon type="AntDesign" name="mail" accessibilityLabel="emailIcon" />
           <Text>{user.email}</Text>
         </View>
+        {filteredByLiked.length !== 0 && <Header title="Liked Spots" />}
+        {filteredByLiked.length !== 0 ? (
+          filteredByLiked.map(spot => {
+            return <Card key={spot._id} spot={spot} navigation={navigation} />;
+          })
+        ) : (
+          <View>
+            <Text>
+              You haven't liked any spots yet. Liked spots will appear below
+            </Text>
+          </View>
+        )}
       </Content>
       <Footer navigation={navigation} />
     </Container>
@@ -34,7 +53,13 @@ export const Profile = ({navigation, auth: {user}, filterSpotsBasedOnLike}) => {
 
 const mapStateToProps = state => ({
   auth: state.auth,
+  spot: state.spot,
 });
+
+export default connect(
+  mapStateToProps,
+  {filterSpotsBasedOnLike},
+)(Profile);
 
 const styles = StyleSheet.create({
   iconText: {
@@ -42,8 +67,3 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
-
-export default connect(
-  mapStateToProps,
-  {filterSpotsBasedOnLike},
-)(Profile);

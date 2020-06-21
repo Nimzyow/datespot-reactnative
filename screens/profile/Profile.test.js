@@ -8,6 +8,13 @@ describe('Profile', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     defaultProps = {
+      spot: {
+        spots: [{_id: 'spotId1'}, {_id: 'spotId2'}, {_id: 'spotId3'}],
+        filteredByLiked: [
+          {_id: 'spotId1', likes: []},
+          {_id: 'spotId2', likes: []},
+        ],
+      },
       auth: {
         user: {
           _id: 'userId',
@@ -55,5 +62,27 @@ describe('Profile', () => {
     expect(defaultProps.filterSpotsBasedOnLike).toHaveBeenCalledWith(
       defaultProps.auth.user,
     );
+  });
+  it('should display a list of spots the user has liked', () => {
+    const {getAllByA11yLabel} = render(<Profile {...defaultProps} />);
+
+    const likedItemElement = getAllByA11yLabel('spotItemElement');
+
+    expect(likedItemElement.length).toBe(2);
+  });
+  it('should display a message if user has not liked any spots', () => {
+    defaultProps.spot.filteredByLiked = [];
+    const {getByText} = render(<Profile {...defaultProps} />);
+
+    expect(
+      getByText(
+        "You haven't liked any spots yet. Liked spots will appear below",
+      ),
+    ).toBeTruthy();
+  });
+  it('should display Liked Spots if user has liked spots', () => {
+    const {getByText} = render(<Profile {...defaultProps} />);
+
+    expect(getByText('Liked Spots')).toBeTruthy();
   });
 });
