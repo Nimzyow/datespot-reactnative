@@ -13,6 +13,9 @@ describe('Card', () => {
         summary: 'spot1Summary',
         likes: [{userId: 'user1'}],
       },
+      user: {
+        _id: 'testy',
+      },
     };
   });
   it('should display Spot with image, title and summary', () => {

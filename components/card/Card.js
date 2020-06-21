@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Image} from 'react-native';
 import {
   Card as CardNB,
@@ -10,7 +10,44 @@ import {
   Button,
 } from 'native-base';
 
-export const Card = ({spot, navigation}) => {
+export const Card = ({
+  spot,
+  navigation,
+  user,
+  addToLikeCount,
+  removeFromLikeCount,
+}) => {
+  const [color, setColor] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      setColorOfHeart();
+    }
+  }, [spot.likes]);
+
+  const setColorOfHeart = () => {
+    if (spot.likes.length === 0) {
+      setColor('black');
+    } else {
+      let currentUserLikedSpot = spot.likes.filter(
+        like => like.userId === user._id,
+      ).length;
+      if (currentUserLikedSpot === 0) {
+        setColor('black');
+      } else {
+        setColor('red');
+      }
+    }
+  };
+
+  const setLikeState = () => {
+    if (color === 'black') {
+      addToLikeCount({spotId: spot._id, userId: user._id});
+    } else {
+      removeFromLikeCount({spotId: spot._id, userId: user._id});
+    }
+  };
+
   return (
     <CardNB key={spot._id} accessibilityLabel="spotItemElement">
       <CardItem cardBody>
@@ -22,11 +59,12 @@ export const Card = ({spot, navigation}) => {
       </CardItem>
       <CardItem>
         <Left>
-          <Button transparent>
+          <Button transparent onPress={setLikeState}>
             <Icon
               accessibilityLabel="likeElement"
               type="FontAwesome"
-              name="heart-o"
+              name={color === 'black' ? 'heart-o' : 'heart'}
+              style={color === 'black' ? {color: 'black'} : {color: 'red'}}
             />
           </Button>
           <Text>

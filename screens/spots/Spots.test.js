@@ -13,6 +13,9 @@ describe('Spots', () => {
       getSpots: jest.fn(),
       auth: {
         isAuthenticated: true,
+        user: {
+          _id: 'testyId',
+        },
       },
       spot: {
         spots: [

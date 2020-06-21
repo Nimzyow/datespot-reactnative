@@ -4,14 +4,18 @@ import {Container, Content, Text} from 'native-base';
 import {connect} from 'react-redux';
 
 import {loadUser} from '../../actions/auth';
-import {getSpots} from '../../actions/spots';
+import {
+  getSpots,
+  addToLikeCount,
+  removeFromLikeCount,
+} from '../../actions/spots';
 
 import {Card} from '../../components/card/Card';
 import {Footer} from '../../components/footer/Footer';
 
 export const Spots = ({
   navigation,
-  auth: {isAuthenticated},
+  auth: {isAuthenticated, user},
   loadUser,
   spot: {spots},
   getSpots,
@@ -30,7 +34,16 @@ export const Spots = ({
       <Content accessibilityLabel="spotItemsContainer">
         {spots !== null ? (
           spots.map(spot => {
-            return <Card key={spot._id} spot={spot} navigation={navigation} />;
+            return (
+              <Card
+                key={spot._id}
+                spot={spot}
+                navigation={navigation}
+                user={user}
+                addToLikeCount={() => addToLikeCount()}
+                removeFromLikeCount={() => removeFromLikeCount()}
+              />
+            );
           })
         ) : (
           <View accessibilityLabel="loading">
