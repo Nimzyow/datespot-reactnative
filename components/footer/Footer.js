@@ -5,10 +5,16 @@ export const Footer = ({navigation}) => {
   return (
     <FooterNB accessibilityLabel="footerContainer">
       <FooterTab>
-        <Button accessibilityLabel="homeElement">
+        <Button
+          testID="homeTest"
+          accessibilityLabel="homeElement"
+          onPress={() => navigation.navigate('spots')}>
           <Icon name="home" />
         </Button>
-        <Button accessibilityLabel="profileElement">
+        <Button
+          testID="profileTest"
+          accessibilityLabel="profileElement"
+          onPress={() => navigation.navigate('profile')}>
           <Icon name="person" />
         </Button>
       </FooterTab>
