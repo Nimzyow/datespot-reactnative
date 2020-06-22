@@ -146,4 +146,4 @@ It's proving to be a very interesting experience and I look forward to expanding
 - TDD profile page [x.]
 - TDD like function, action, reducer [x]
 - TDD comment function, action, reducer []
-- Create Spinner to show loading state
+- Create Spinner to show loading state []

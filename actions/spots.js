@@ -93,3 +93,35 @@ export const removeFromLikeCount = toRemove => async dispatch => {
     });
   }
 };
+
+export const postComment = data => async dispatch => {
+  const toSend = {
+    comment: data.comment,
+    userId: data.userId,
+  };
+  try {
+    const storageResponse = await AsyncStorage.getItem('datespot-token');
+    const token = storageResponse;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': token,
+      },
+    };
+
+    const res = await axios.post(
+      `http://localhost:4000/api/spots/${data.spotId}/comments`,
+      toSend,
+      config,
+    );
+    dispatch({
+      type: Types.ADD_COMMENT,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: Types.SPOTS_ERROR,
+      payload: err,
+    });
+  }
+};

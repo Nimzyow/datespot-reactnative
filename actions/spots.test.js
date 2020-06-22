@@ -8,6 +8,7 @@ import {
   filterSpotsBasedOnLike,
   addToLikeCount,
   removeFromLikeCount,
+  postComment,
 } from './spots';
 
 describe('spot actions', () => {
@@ -145,5 +146,41 @@ describe('spot actions', () => {
       type: Types.LIKES_ERROR,
       payload: {err: {msg: 'some error'}},
     });
+  });
+  test('postComment function dispatches to ADD_COMMENT', async () => {
+    const defaultToken = 'defaultToken';
+
+    AsyncStorage.setItem('datespot-token', defaultToken);
+
+    mockAxios.post.mockImplementationOnce(
+      async () => await Promise.resolve({data: 'some comment'}),
+    );
+    const toAdd = {
+      spotId: '1',
+      comment: 'comment',
+      userId: 'userId',
+    };
+    const toSend = {
+      comment: 'comment',
+      userId: 'userId',
+    };
+    const response = await postComment(toAdd);
+    await response(dispatch);
+
+    expect(dispatch).toHaveBeenCalledWith({
+      type: Types.ADD_COMMENT,
+      payload: 'some comment',
+    });
+    expect(mockAxios.post).toHaveBeenCalledWith(
+      `http://localhost:4000/api/spots/${toAdd.spotId}/comments`,
+      toSend,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': defaultToken,
+        },
+      },
+    );
+    expect(mockAxios.post).toHaveBeenCalledTimes(1);
   });
 });

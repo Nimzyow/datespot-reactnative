@@ -11,3 +11,4 @@ export const FILTER_BY_USER_LIKES = 'FILTER_BY_USER_LIKES';
 export const ADD_LIKE = 'ADD_LIKE';
 export const REMOVE_LIKE = 'REMOVE_LIKE';
 export const LIKES_ERROR = 'LIKES_ERROR';
+export const ADD_COMMENT = 'ADD_COMMENT';
