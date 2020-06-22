@@ -11,7 +11,7 @@ import {Provider} from 'react-redux';
 
 import store from './store';
 import {Home} from './screens/home/Home';
-import {SpotDetails} from './screens/spotDetails/SpotDetails';
+import SpotDetails from './screens/spotDetails/SpotDetails';
 import {MapSpotDetail} from './screens/mapSpotDetail/MapSpotDetail';
 import Profile from './screens/profile/Profile';
 import Spots from './screens/spots/Spots';

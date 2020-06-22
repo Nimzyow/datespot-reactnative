@@ -37,6 +37,12 @@ describe('SpotDetails', () => {
         },
       },
       navigation: jest.fn(),
+      auth: {
+        user: {_id: 'userId'},
+      },
+      spot: {
+        spots: {_id: 'userId'},
+      },
     };
   });
 

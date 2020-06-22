@@ -1,14 +1,32 @@
-import React from 'react';
-import {View, Image, StyleSheet, ScrollView} from 'react-native';
-import {Container, Text, Icon} from 'native-base';
+import React, {useEffect} from 'react';
+import {
+  View,
+  Image,
+  StyleSheet,
+  ScrollView,
+  KeyboardAvoidingView,
+} from 'react-native';
+import {Container, Text, Icon, Content} from 'native-base';
 
-import {Header} from '../../components/header/Header';
+import {connect} from 'react-redux';
+
 import {Footer} from '../../components/footer/Footer';
+import {commentForm} from '../../utilities/FormFarm';
+import {Header} from '../../components/header/Header';
+import {postComment} from '../../actions/spots';
 
-export const SpotDetails = ({route, navigation}) => {
-  const getComments = comments => {
-    if (comments.length !== 0) {
-      return comments.map(comment => (
+export const SpotDetails = ({
+  route,
+  navigation,
+  postComment,
+  auth: {user},
+  spot: {spots},
+}) => {
+  const {spot} = route.params;
+
+  const getComments = () => {
+    if (spot.comments.length !== 0) {
+      return spot.comments.map(comment => (
         <View key={comment._id} accessibilityLabel="commentElement">
           <Text>{comment.comment}</Text>
         </View>
@@ -17,63 +35,85 @@ export const SpotDetails = ({route, navigation}) => {
     return <Text>No feedback yet!</Text>;
   };
 
-  const {spot} = route.params;
+  useEffect(() => {
+    getComments();
+  }, [spots]);
+
+  const handleSubmit = state => {
+    let data = {
+      comment: state.comment,
+      userId: user._id,
+      spotId: spot._id,
+    };
+    postComment(data);
+  };
+
   return (
     <Container>
-      <ScrollView>
-        <Image
-          style={styles.imageContainer}
-          accessibilityLabel="imageElement"
-          source={{uri: spot.url}}
-        />
-        <Header title="info at a glance" />
-        <View style={styles.iconText}>
-          <Icon
-            accessibilityLabel="moneyIcon"
-            type="FontAwesome5"
-            name="money-bill-wave"
-          />
-          <Text>{spot.avgCost}</Text>
-        </View>
-        <View style={styles.iconText}>
-          <Icon
-            accessibilityLabel="timeIcon"
-            type="FontAwesome"
-            name="clock-o"
-          />
-          <Text>{spot.bestTimes}</Text>
-        </View>
-        <View style={styles.iconText}>
-          <Icon
-            accessibilityLabel="dressIcon"
-            type="FontAwesome5"
-            name="user-astronaut"
-          />
-          <Text>{spot.dress}</Text>
-        </View>
-        <View style={styles.iconText}>
-          <Icon accessibilityLabel="mapIcon" type="FontAwesome" name="map-o" />
-          <Text
-            onPress={() =>
-              navigation.navigate('mapSpotDetail', {
-                latitude: spot.latitude,
-                longitude: spot.longitude,
-                title: spot.title,
-              })
-            }>
-            Tap here to see this spot on a map!
-          </Text>
-        </View>
-        <Icon
-          accessibilityLabel="infoIcon"
-          type="FontAwesome5"
-          name="info-circle"
-        />
-        <Text>{spot.description}</Text>
-        <Header title="Feedback on this Spot" />
-        {getComments(spot.comments)}
-        <View style={{height: '100%'}} />
-      </ScrollView>
+      <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
+        <Content>
+          <ScrollView>
+            <Image
+              style={styles.imageContainer}
+              accessibilityLabel="imageElement"
+              source={{uri: spot.url}}
+            />
+            <Header title="info at a glance" />
+            <View style={styles.iconText}>
+              <Icon
+                accessibilityLabel="moneyIcon"
+                type="FontAwesome5"
+                name="money-bill-wave"
+              />
+              <Text>{spot.avgCost}</Text>
+            </View>
+            <View style={styles.iconText}>
+              <Icon
+                accessibilityLabel="timeIcon"
+                type="FontAwesome"
+                name="clock-o"
+              />
+              <Text>{spot.bestTimes}</Text>
+            </View>
+            <View style={styles.iconText}>
+              <Icon
+                accessibilityLabel="dressIcon"
+                type="FontAwesome5"
+                name="user-astronaut"
+              />
+              <Text>{spot.dress}</Text>
+            </View>
+            <View style={styles.iconText}>
+              <Icon
+                accessibilityLabel="mapIcon"
+                type="FontAwesome"
+                name="map-o"
+              />
+              <Text
+                onPress={() =>
+                  navigation.navigate('mapSpotDetail', {
+                    latitude: spot.latitude,
+                    longitude: spot.longitude,
+                    title: spot.title,
+                  })
+                }>
+                Tap here to see this spot on a map!
+              </Text>
+            </View>
+            <Icon
+              accessibilityLabel="infoIcon"
+              type="FontAwesome5"
+              name="info-circle"
+            />
+            <Text>{spot.description}</Text>
+            <Header title="Feedback on this Spot" />
+            {getComments()}
+            <Header title={'Feedback form'} />
+            {commentForm(handleSubmit)}
+            <View style={{height: '100%'}} />
+          </ScrollView>
+        </Content>
+      </KeyboardAvoidingView>
       <Footer navigation={navigation} />
     </Container>
   );
@@ -95,3 +135,13 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 });
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  spot: state.spot,
+});
+
+export default connect(
+  mapStateToProps,
+  {postComment},
+)(SpotDetails);

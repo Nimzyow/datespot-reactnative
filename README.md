@@ -145,5 +145,5 @@ It's proving to be a very interesting experience and I look forward to expanding
 - plan what should be in profile page and what it should look like [x]
 - TDD profile page [x.]
 - TDD like function, action, reducer [x]
-- TDD comment function, action, reducer []
+- TDD comment function, action, reducer [x]
 - Create Spinner to show loading state []
