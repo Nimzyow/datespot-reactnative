@@ -110,4 +110,24 @@ describe('spotReducer', () => {
 
     expect(spotReducer(undefined, action)).toEqual(expectedState);
   });
+  test('changes state on add comment', () => {
+    const action = {
+      type: Types.ADD_COMMENT,
+      payload: {
+        spot: {_id: 'oneId', comments: []},
+        comments: [{_id: 'twoId'}],
+      },
+    };
+
+    initialState.spots = [{_id: action.payload.spot._id, comments: []}];
+
+    expectedState.spots = [
+      {
+        _id: action.payload.spot._id,
+        comments: [action.payload.comments[0]],
+      },
+    ];
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
 });

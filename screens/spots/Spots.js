@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Container, Content, Text} from 'native-base';
+import {Container, Content, Text, Spinner} from 'native-base';
 import {connect} from 'react-redux';
 
 import {loadUser} from '../../actions/auth';
@@ -8,6 +8,7 @@ import {
   getSpots,
   addToLikeCount,
   removeFromLikeCount,
+  postComment,
 } from '../../actions/spots';
 
 import {Card} from '../../components/card/Card';
@@ -21,6 +22,7 @@ export const Spots = ({
   getSpots,
   addToLikeCount,
   removeFromLikeCount,
+  postComment,
 }) => {
   useEffect(() => {
     loadUser();
@@ -31,6 +33,7 @@ export const Spots = ({
     }
     getSpots();
   }, []);
+
   return (
     <Container accessibilityLabel="spotsContainer" style={styles.container}>
       <Content accessibilityLabel="spotItemsContainer">
@@ -49,7 +52,7 @@ export const Spots = ({
           })
         ) : (
           <View accessibilityLabel="loading">
-            <Text>Loading</Text>
+            <Spinner color="red" />
           </View>
         )}
       </Content>
@@ -65,7 +68,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {loadUser, getSpots, addToLikeCount, removeFromLikeCount},
+  {loadUser, getSpots, addToLikeCount, removeFromLikeCount, postComment},
 )(Spots);
 
 const styles = StyleSheet.create({

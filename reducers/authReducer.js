@@ -6,6 +6,7 @@ const initialState = {
   isAuthenticated: false,
   user: null,
   error: null,
+  loading: false,
 };
 
 export default (state = initialState, action) => {
@@ -46,6 +47,16 @@ export default (state = initialState, action) => {
         ...state,
         isAuthenticated: true,
         user: action.payload,
+      };
+    case types.IS_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.IS_NOT_LOADING:
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;
