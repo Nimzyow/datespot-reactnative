@@ -97,6 +97,10 @@ describe('spot actions', () => {
     );
   });
   test('removeFromLikeCount function dispatches to REMOVE_LIKE', async () => {
+    const defaultToken = 'defaultToken';
+
+    AsyncStorage.setItem('datespot-token', defaultToken);
+
     mockAxios.post.mockImplementationOnce(
       async () => await Promise.resolve({data: 'some likes'}),
     );
@@ -118,7 +122,10 @@ describe('spot actions', () => {
       `http://localhost:4000/api/spots/${toRemove.spotId}/likeRemove`,
       toSend,
       {
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': defaultToken,
+        },
       },
     );
     expect(mockAxios.post).toHaveBeenCalledTimes(1);

@@ -31,10 +31,7 @@ export const filterSpotsBasedOnLike = user => dispatch => {
 };
 
 export const addToLikeCount = toAdd => async dispatch => {
-  console.log('DO WE EVEN GET HERE?');
-
   const {spotId, userId} = toAdd;
-  console.log('SPOTID AND USERID', spotId, userId);
 
   const toSend = {userId};
 
@@ -47,6 +44,7 @@ export const addToLikeCount = toAdd => async dispatch => {
         'x-auth-token': token,
       },
     };
+
     const res = await axios.post(
       `http://localhost:4000/api/spots/${spotId}/like`,
       toSend,
@@ -68,12 +66,17 @@ export const removeFromLikeCount = toRemove => async dispatch => {
   const {spotId, userId} = toRemove;
 
   const toSend = {userId};
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+
   try {
+    const storageResponse = await AsyncStorage.getItem('datespot-token');
+    const token = storageResponse;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': token,
+      },
+    };
+
     await axios.post(
       `http://localhost:4000/api/spots/${spotId}/likeRemove`,
       toSend,
