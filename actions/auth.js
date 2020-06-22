@@ -3,6 +3,9 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
 export const registerUser = formData => async dispatch => {
+  dispatch({
+    type: Types.IS_LOADING,
+  });
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -18,15 +21,24 @@ export const registerUser = formData => async dispatch => {
       type: Types.REGISTER_SUCCESS,
       payload: res.data,
     });
+    dispatch({
+      type: Types.IS_NOT_LOADING,
+    });
   } catch (err) {
     dispatch({
       type: Types.REGISTER_FAIL,
       payload: err.response.data.msg,
     });
+    dispatch({
+      type: Types.IS_NOT_LOADING,
+    });
   }
 };
 
 export const loginUser = formData => async dispatch => {
+  dispatch({
+    type: Types.IS_LOADING,
+  });
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -43,10 +55,16 @@ export const loginUser = formData => async dispatch => {
       payload: res.data,
     });
     await loadUser();
+    dispatch({
+      type: Types.IS_NOT_LOADING,
+    });
   } catch (err) {
     dispatch({
       type: Types.LOGIN_FAIL,
       payload: err.response.data.msg,
+    });
+    dispatch({
+      type: Types.IS_NOT_LOADING,
     });
   }
 };

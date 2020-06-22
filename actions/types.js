@@ -12,3 +12,5 @@ export const ADD_LIKE = 'ADD_LIKE';
 export const REMOVE_LIKE = 'REMOVE_LIKE';
 export const LIKES_ERROR = 'LIKES_ERROR';
 export const ADD_COMMENT = 'ADD_COMMENT';
+export const IS_LOADING = 'IS_LOADING';
+export const IS_NOT_LOADING = 'IS_NOT_LOADING';

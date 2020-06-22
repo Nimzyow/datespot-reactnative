@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
-import {Text} from 'native-base';
+import {Text, Spinner} from 'native-base';
 
 import {connect} from 'react-redux';
 
@@ -11,7 +11,7 @@ import {Header} from '../../components/header/Header';
 export const Authentication = ({
   registerUser,
   loginUser,
-  auth: {isAuthenticated},
+  auth: {isAuthenticated, loading},
   navigation,
 }) => {
   const [form, setForm] = useState('login');
@@ -57,6 +57,7 @@ export const Authentication = ({
           </Text>
         </View>
       )}
+      {loading && <Spinner color="red" />}
     </View>
   );
 };

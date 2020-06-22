@@ -10,6 +10,7 @@ describe('authReducer', () => {
       isAuthenticated: false,
       user: null,
       error: null,
+      loading: false,
     };
     expectedState = {...initialState};
   });
@@ -83,5 +84,23 @@ describe('authReducer', () => {
 
     expect(authReducer(initialState, action)).toEqual(expectedState);
     expect(AsyncStorage.removeItem).toBeCalledWith('datespot-token');
+  });
+  it('calls IS_LOADING action', () => {
+    expectedState.loading = true;
+
+    const action = {
+      type: types.IS_LOADING,
+    };
+
+    expect(authReducer(undefined, action)).toEqual(expectedState);
+  });
+  it('calls IS_NOT_LOADING action', () => {
+    initialState.loading = true;
+    expectedState.loading = false;
+    const action = {
+      type: types.IS_NOT_LOADING,
+    };
+
+    expect(authReducer(initialState, action)).toEqual(expectedState);
   });
 });
