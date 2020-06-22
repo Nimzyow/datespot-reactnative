@@ -27,11 +27,11 @@ export const Profile = ({
             name="user-o"
             accessibilityLabel="usernameIcon"
           />
-          <Text>{user.username}</Text>
+          <Text style={{marginLeft: 10}}>{user.username}</Text>
         </View>
         <View style={styles.iconText} accessibilityLabel="emailContainer">
           <Icon type="AntDesign" name="mail" accessibilityLabel="emailIcon" />
-          <Text>{user.email}</Text>
+          <Text style={{marginLeft: 10}}>{user.email}</Text>
         </View>
         {filteredByLiked.length !== 0 && <Header title="Liked Spots" />}
         {filteredByLiked.length !== 0 ? (
@@ -65,5 +65,8 @@ const styles = StyleSheet.create({
   iconText: {
     display: 'flex',
     flexDirection: 'row',
+    marginLeft: 10,
+    marginRight: 40,
+    marginTop: 10,
   },
 });

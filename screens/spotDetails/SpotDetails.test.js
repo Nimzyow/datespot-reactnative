@@ -73,7 +73,7 @@ describe('SpotDetails', () => {
     } = defaultProps.route.params.spot;
 
     const textToFind = [
-      getByText(avgCost),
+      getByText(`£${avgCost}`),
       getByText(bestTimes),
       getByText(dress),
       getByText(description),

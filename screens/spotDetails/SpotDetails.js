@@ -27,12 +27,15 @@ export const SpotDetails = ({
   const getComments = () => {
     if (spot.comments.length !== 0) {
       return spot.comments.map(comment => (
-        <View key={comment._id} accessibilityLabel="commentElement">
-          <Text>{comment.comment}</Text>
+        <View
+          style={styles.commentContainer}
+          key={comment._id}
+          accessibilityLabel="commentElement">
+          <Text style={styles.commentStyle}>{comment.comment}</Text>
         </View>
       ));
     }
-    return <Text>No feedback yet!</Text>;
+    return <Text style={styles.commentStyle}>No feedback yet!</Text>;
   };
 
   useEffect(() => {
@@ -61,14 +64,16 @@ export const SpotDetails = ({
             <Header title="info at a glance" />
             <View style={styles.iconText}>
               <Icon
+                style={styles.iconStyle}
                 accessibilityLabel="moneyIcon"
                 type="FontAwesome5"
                 name="money-bill-wave"
               />
-              <Text>{spot.avgCost}</Text>
+              <Text>£{spot.avgCost}</Text>
             </View>
             <View style={styles.iconText}>
               <Icon
+                style={styles.iconStyle}
                 accessibilityLabel="timeIcon"
                 type="FontAwesome"
                 name="clock-o"
@@ -77,6 +82,7 @@ export const SpotDetails = ({
             </View>
             <View style={styles.iconText}>
               <Icon
+                style={styles.iconStyle}
                 accessibilityLabel="dressIcon"
                 type="FontAwesome5"
                 name="user-astronaut"
@@ -85,6 +91,7 @@ export const SpotDetails = ({
             </View>
             <View style={styles.iconText}>
               <Icon
+                style={styles.iconStyle}
                 accessibilityLabel="mapIcon"
                 type="FontAwesome"
                 name="map-o"
@@ -101,16 +108,17 @@ export const SpotDetails = ({
               </Text>
             </View>
             <Icon
+              style={styles.infoIcon}
               accessibilityLabel="infoIcon"
               type="FontAwesome5"
               name="info-circle"
             />
-            <Text>{spot.description}</Text>
+            <Text style={{margin: 15}}>{spot.description}</Text>
             <Header title="Feedback on this Spot" />
             {getComments()}
             <Header title={'Feedback form'} />
             {commentForm(handleSubmit)}
-            <View style={{height: '100%'}} />
+            <View style={{height: '200%'}} />
           </ScrollView>
         </Content>
       </KeyboardAvoidingView>
@@ -130,9 +138,28 @@ const styles = StyleSheet.create({
   iconText: {
     display: 'flex',
     flexDirection: 'row',
+    marginLeft: 10,
+    marginRight: 40,
+    marginTop: 10,
   },
   map: {
     height: '100%',
+  },
+  iconStyle: {
+    width: 50,
+  },
+  infoIcon: {
+    textAlign: 'center',
+    margin: 15,
+  },
+  commentContainer: {
+    margin: 15,
+    borderStyle: 'solid',
+    borderWidth: 2,
+    borderRadius: 10,
+  },
+  commentStyle: {
+    padding: 5,
   },
 });
 
